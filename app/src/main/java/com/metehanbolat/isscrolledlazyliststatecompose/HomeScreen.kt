@@ -33,7 +33,8 @@ fun HomeScreen() {
                 List(lazyListState = lazyListState)
                 Text(
                     modifier = Modifier.align(Alignment.Center),
-                    text = "Idle",
+                    text = if (lazyListState.isScrolled) "Scrolling" else "Idle",
+                    color = if (lazyListState.isScrolled) MaterialTheme.colors.primary else MaterialTheme.colors.onBackground,
                     style = TextStyle(fontSize = MaterialTheme.typography.h5.fontSize)
                 )
             }
@@ -69,6 +70,9 @@ fun ItemHolder() {
             .background(Color.LightGray.copy(alpha = ContentAlpha.disabled))
     )
 }
+
+val LazyListState.isScrolled: Boolean
+    get() = firstVisibleItemIndex > 0 || firstVisibleItemScrollOffset > 0
 
 @Preview
 @Composable
